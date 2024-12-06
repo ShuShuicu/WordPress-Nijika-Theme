@@ -119,7 +119,7 @@ function NijikaTheme_Settings_Page() {
                         <div class="mdui-row-md-4">
                             <div class="mdui-col">
                                 <label class="mdui-radio">
-                                    <input type="radio" name="NijikaOptions_Avatar" value="1" <?php checked(Get::Options('NijikaOptions_Avatar', 'default'), '1'); ?> checked />
+                                    <input type="radio" name="NijikaOptions_Avatar" value="1" <?php checked(Get::Options('NijikaOptions_Avatar', 'default'), '1'); ?> />
                                     <i class="mdui-radio-icon"></i>
                                     CrAvatar
                                 </label>
@@ -169,7 +169,7 @@ function NijikaTheme_Settings_Page() {
                                 <label class="mdui-checkbox">
                                     <input type="checkbox" name="NijikaOptions_Functions[]" value="3" <?php checked(in_array('3', Get::Options('NijikaOptions_Functions', [])), true); ?> />
                                     <i class="mdui-checkbox-icon"></i>
-                                    禁用emoji's
+                                    移除Category
                                 </label>
                             </div>
                             <div class="mdui-col">

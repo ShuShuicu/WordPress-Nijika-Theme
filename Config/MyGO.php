@@ -93,6 +93,40 @@ function load_selected_features() {
     }
 
     if (in_array('3', $selected_features)) {
+        // 移除Category
+        add_filter('request', function($query_vars) {
+            if(!isset($_GET['page_id']) && !isset($_GET['pagename']) && !empty($query_vars['pagename'])){
+                $pagename	= $query_vars['pagename'];
+                $categories	= get_categories(['hide_empty'=>false]);
+                $categories	= wp_list_pluck($categories, 'slug');
+        
+                if(in_array($pagename, $categories)){
+                    $query_vars['category_name']	= $query_vars['pagename'];
+                    unset($query_vars['pagename']);
+                }
+            }
+        
+            return $query_vars;
+        });
+        
+        add_filter('pre_term_link', function($term_link, $term){
+            if($term->taxonomy == 'category'){
+                return '%category%';
+            }
+        
+            return $term_link;
+        }, 10, 2);
+    }
+
+    if (in_array('4', $selected_features)) {
+        // 净化WordPress
+        remove_action('wp_head', 'wp_generator'); // 移除WordPress版本
+        remove_filter('comment_text', 'make_clickable', 9); // 移除wordpress留言中自动链接功能
+        remove_action('wp_head', 'rsd_link'); // 移除离线编辑器开放接口
+        remove_action('wp_head', 'index_rel_link'); // 去除本页唯一链接信息
+        remove_action('wp_head', 'wlwmanifest_link'); // 移除离线编辑器开放接口
+        remove_filter('the_content', 'wptexturize'); // 禁止代码标点符合转义
+        add_filter('show_admin_bar', '__return_false'); // 彻底移除管理员工具条
         // 禁用 emoji's
         function disable_emojis() {
             remove_action('wp_head', 'print_emoji_detection_script', 7);
@@ -113,17 +147,6 @@ function load_selected_features() {
                 return [];
             }
         }
-    }
-
-    if (in_array('4', $selected_features)) {
-        // 净化WordPress
-        remove_action('wp_head', 'wp_generator'); // 移除WordPress版本
-        remove_filter('comment_text', 'make_clickable', 9); // 移除wordpress留言中自动链接功能
-        remove_action('wp_head', 'rsd_link'); // 移除离线编辑器开放接口
-        remove_action('wp_head', 'index_rel_link'); // 去除本页唯一链接信息
-        remove_action('wp_head', 'wlwmanifest_link'); // 移除离线编辑器开放接口
-        remove_filter('the_content', 'wptexturize'); // 禁止代码标点符合转义
-        add_filter('show_admin_bar', '__return_false'); // 彻底移除管理员工具条
     }
 }
 add_action('init', 'load_selected_features');

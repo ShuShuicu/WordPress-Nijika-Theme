@@ -8,7 +8,7 @@ get_header();
         <div class="mdui-card-primary">
             <div class="mdui-card-primary-title">{{ page.title }}</div>
             <div class="mdui-card-primary-subtitle">{{ page.date }}</div>
-            <div class="mdui-card-content" id="PostContent" v-html="page.content"></div>
+            <div class="mdui-card-content mdui-typo" id="PostContent" v-html="page.content"></div>
         </div>
     </div>
 </div>

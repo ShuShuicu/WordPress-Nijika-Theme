@@ -16,7 +16,7 @@ get_header();
                     <a :href="tag.url" class="mdui-chip-title">{{ tag.name }}</a>
                 </span>
             </div>
-            <div class="mdui-card-content" id="PostContent" v-html="post.content"></div>
+            <div class="mdui-card-content mdui-typo" id="PostContent" v-html="post.content"></div>
         </div>
     </div>
 </div>
