@@ -169,7 +169,7 @@ function NijikaTheme_Settings_Page() {
                                 <label class="mdui-checkbox">
                                     <input type="checkbox" name="NijikaOptions_Functions[]" value="3" <?php checked(in_array('3', Get::Options('NijikaOptions_Functions', [])), true); ?> />
                                     <i class="mdui-checkbox-icon"></i>
-                                    移除Category
+                                    移除所有更新监测
                                 </label>
                             </div>
                             <div class="mdui-col">

@@ -19,6 +19,16 @@ class Get {
             } else {
                 return $site_name;
             }
+        } elseif (is_category()) {
+            // 分类页面标题
+            $category_name = single_cat_title('', false);
+            $site_name = get_bloginfo('name');
+            return $category_name . ' - ' . $site_name;
+        } elseif (is_tag()) {
+            // 标签页面标题
+            $tag_name = single_tag_title('', false);
+            $site_name = get_bloginfo('name');
+            return $tag_name . ' - ' . $site_name;
         } else {
             // 内页标题
             $page_title = get_the_title();

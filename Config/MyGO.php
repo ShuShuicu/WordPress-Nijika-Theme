@@ -93,29 +93,31 @@ function load_selected_features() {
     }
 
     if (in_array('3', $selected_features)) {
-        // 移除Category
-        add_filter('request', function($query_vars) {
-            if(!isset($_GET['page_id']) && !isset($_GET['pagename']) && !empty($query_vars['pagename'])){
-                $pagename	= $query_vars['pagename'];
-                $categories	= get_categories(['hide_empty'=>false]);
-                $categories	= wp_list_pluck($categories, 'slug');
         
-                if(in_array($pagename, $categories)){
-                    $query_vars['category_name']	= $query_vars['pagename'];
-                    unset($query_vars['pagename']);
-                }
-            }
-        
-            return $query_vars;
-        });
-        
-        add_filter('pre_term_link', function($term_link, $term){
-            if($term->taxonomy == 'category'){
-                return '%category%';
-            }
-        
-            return $term_link;
-        }, 10, 2);
+        // 彻底关闭自动更新
+        add_filter('automatic_updater_disabled', '__return_true');
+        // 关闭更新检查定时作业
+        remove_action('init', 'wp_schedule_update_checks');
+        // 移除已有的版本检查定时作业
+        wp_clear_scheduled_hook('wp_version_check');
+        // 移除已有的插件更新定时作业
+        wp_clear_scheduled_hook('wp_update_plugins');
+        // 移除已有的主题更新定时作业 
+        wp_clear_scheduled_hook('wp_update_themes');
+        // 移除已有的自动更新定时作业 
+        wp_clear_scheduled_hook('wp_maybe_auto_update');
+        // 移除后台内核更新检查 
+        remove_action( 'admin_init', '_maybe_update_core' );
+        // 移除后台插件更新检查 
+        remove_action( 'load-plugins.php', 'wp_update_plugins' );
+        remove_action( 'load-update.php', 'wp_update_plugins' );
+        remove_action( 'load-update-core.php', 'wp_update_plugins' );
+        remove_action( 'admin_init', '_maybe_update_plugins' );
+        // 移除后台主题更新检查 
+        remove_action( 'load-themes.php', 'wp_update_themes' );
+        remove_action( 'load-update.php', 'wp_update_themes' );
+        remove_action( 'load-update-core.php', 'wp_update_themes' );
+        remove_action( 'admin_init', '_maybe_update_themes' );
     }
 
     if (in_array('4', $selected_features)) {
