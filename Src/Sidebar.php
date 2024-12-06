@@ -38,7 +38,7 @@ if (!defined('ABSPATH')) exit;
                 } else {
                     // 显示首页链接
                     ?>
-                    <a href="<?php echo Get::HomeUrl('/'); ?>">
+                    <a href="<?php echo Get::HomeUrl('/'); ?>" no-pjax>
                         <li class="mdui-list-item mdui-ripple">
                             <i class="mdui-list-item-icon mdui-icon material-icons">home</i>
                             <div class="mdui-list-item-content">首页</div>

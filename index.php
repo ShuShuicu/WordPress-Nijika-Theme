@@ -12,10 +12,10 @@ get_header();
             <div class="mdui-card-primary-subtitle">{{ post.date }}</div>
             <div class="mdui-card-primary-subtitle">
                 <span v-for="category in post.categories" :key="category.id" class="mdui-chip">
-                    <a :href="category.url" class="mdui-chip-title">{{ category.name }}</a>
+                    <a :href="category.url" class="mdui-chip-title" target="_blank">{{ category.name }}</a>
                 </span>
                 <span v-for="tag in post.tags" :key="tag.id" class="mdui-chip">
-                    <a :href="tag.url" class="mdui-chip-title">{{ tag.name }}</a>
+                    <a :href="tag.url" class="mdui-chip-title" target="_blank">{{ tag.name }}</a>
                 </span>
             </div>
             <a :href="post.permalink">
@@ -26,12 +26,16 @@ get_header();
 </div>
 
 <script>
-new Vue({
-    el: '#Index',
-    data: {
-        posts: vueData.posts || []
-    }
-});
+function initializeVue() {
+    new Vue({
+        el: '#Index',
+        data: {
+            posts: vueData.posts || []
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initializeVue);
 </script>
 
 <?php get_footer(); ?>

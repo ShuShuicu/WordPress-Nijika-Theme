@@ -67,7 +67,7 @@ class Custom_Walker_Nav_Menu extends Walker_Nav_Menu {
         $new_window = get_post_meta( $item->ID, '_menu_new_window', true );
         $target = $new_window ? ' target="_blank"' : '';
 
-        $output .= '<a href="' . esc_url( $item->url ) . '"' . $target . '>';
+        $output .= '<a href="' . esc_url( $item->url ) . '"' . $target . ' no-pjax>';
         $output .= '<li class="mdui-list-item mdui-ripple">';
         if ( ! empty( $icon_value ) ) {
             $output .= '<i class="mdui-list-item-icon mdui-icon material-icons">' . esc_html( $icon_value ) . '</i>';

@@ -12,6 +12,26 @@ function pass_posts_to_vue() {
         'post_type' => 'post',
         'posts_per_page' => -1,
     );
+
+    if (is_home() || is_front_page()) {
+        // 首页显示最新文章
+        $args['orderby'] = 'date';
+        $args['order'] = 'DESC';
+    } elseif (is_category()) {
+        // 分类归档页面显示特定分类的文章
+        $current_cat = get_queried_object();
+        $cat_id = isset($current_cat->term_id) ? $current_cat->term_id : null;
+        if (!is_null($cat_id)) {
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'term_id',
+                    'terms'    => $cat_id,
+                ),
+            );
+        }
+    }
+
     $query = new WP_Query($args);
     $posts = array();
 
@@ -56,8 +76,11 @@ function pass_posts_to_vue() {
 
     wp_localize_script('vue-js', 'vueData', array(
         'posts' => $posts,
-        'SiteUrl' => home_url(), 
+        'SiteUrl' => home_url(),
         'SiteTitle' => get_bloginfo('name'),
     ));
+
+    // 添加标识符以便在 PJAX 加载完成后调用
+    echo '<script type="text/javascript">window.vueDataLoaded = true;</script>';
 }
 add_action('wp_enqueue_scripts', 'pass_posts_to_vue');
