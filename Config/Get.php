@@ -59,6 +59,6 @@ class Get {
 
     // 引用Src文件
     public static function Src($file) {
-        require_once get_theme_file_path() . '\/Src/' . $file . '.php'; 
+        require_once get_theme_file_path() . '/Src/' . $file . '.php'; 
     }
 }

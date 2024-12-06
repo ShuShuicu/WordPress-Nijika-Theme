@@ -9,5 +9,5 @@ $ConfigFiles = [
     'Functions',
 ];
 foreach ($ConfigFiles as $file) {
-    require_once dirname(__FILE__) . '\/Config/' . $file . '.php';
+    require_once dirname(__FILE__) . '/Config/' . $file . '.php';
 }
