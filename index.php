@@ -23,6 +23,15 @@ get_header();
             </a>
         </div>
     </div>
+
+    <div class="mdui-m-y-1 mdui-valign mdui-card mdui-hoverable mdui-card-content">
+        <a v-if="currentPage > 1" :href="prevPageLink" class="mdui-ripple mdui-btn mdui-btn-icon mdui-color-theme" no-pjax><i class="material-icons mdui-icon ignore-translate">chevron_left</i></a>
+        <span class="mdui-typo-body-1-opacity mdui-text-center" style="flex-grow: 1;">
+            第 {{ currentPage }} 页 / 共 {{ totalPages }} 页
+        </span> 
+        <a v-if="currentPage < totalPages" :href="nextPageLink" class="mdui-ripple mdui-btn mdui-btn-icon mdui-color-theme" no-pjax><i class="material-icons mdui-icon ignore-translate">chevron_right</i></a>
+    </div>
+
 </div>
 
 <script>
@@ -30,7 +39,11 @@ function initializeVue() {
     new Vue({
         el: '#Index',
         data: {
-            posts: vueData.posts || []
+            posts: vueData.posts || [],
+            currentPage: vueData.currentPage || 1,
+            totalPages: vueData.totalPages || 1,
+            prevPageLink: vueData.prevPageLink || '#',
+            nextPageLink: vueData.nextPageLink || '#'
         }
     });
 }

@@ -8,9 +8,13 @@ function add_vue_scripts() {
 add_action('wp_enqueue_scripts', 'add_vue_scripts');
 
 function pass_posts_to_vue() {
+    // 获取每页显示的文章数量
+    $posts_per_page = get_option('posts_per_page', 10); // 默认值为10
+
     $args = array(
         'post_type' => 'post',
-        'posts_per_page' => -1,
+        'posts_per_page' => $posts_per_page,
+        'paged' => get_query_var('paged') ? get_query_var('paged') : 1,
     );
 
     if (is_home() || is_front_page()) {
@@ -78,6 +82,10 @@ function pass_posts_to_vue() {
         'posts' => $posts,
         'SiteUrl' => home_url(),
         'SiteTitle' => get_bloginfo('name'),
+        'currentPage' => $args['paged'],
+        'totalPages' => $query->max_num_pages,
+        'prevPageLink' => get_previous_posts_page_link(),
+        'nextPageLink' => get_next_posts_page_link(),
     ));
 
     // 添加标识符以便在 PJAX 加载完成后调用
