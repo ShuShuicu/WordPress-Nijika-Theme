@@ -2,7 +2,7 @@
 if (!defined('ABSPATH')) exit;
 function NijikaTheme() {
     add_submenu_page(
-        'themes.php', // 父菜单页面（这里是主题页面）
+        'themes.php', // 注册页面位置
         'Nijika Theme', // 页面标题
         'Nijika 设置', // 菜单标题
         'manage_options', // 权限要求

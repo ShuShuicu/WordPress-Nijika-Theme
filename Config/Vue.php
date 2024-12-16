@@ -34,6 +34,19 @@ function pass_posts_to_vue() {
                 ),
             );
         }
+    } elseif (is_tag()) {
+        // 标签归档页面显示特定标签的文章
+        $current_tag = get_queried_object();
+        $tag_id = isset($current_tag->term_id) ? $current_tag->term_id : null;
+        if (!is_null($tag_id)) {
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'post_tag',
+                    'field'    => 'term_id',
+                    'terms'    => $tag_id,
+                ),
+            );
+        }
     }
 
     $query = new WP_Query($args);
